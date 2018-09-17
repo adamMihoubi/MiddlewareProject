@@ -1,0 +1,45 @@
+<div class="container">
+  <h3>Welcome on your main page {{user}}</h3>
+
+<br>
+
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon3">Add Photos :</span>
+  <input type="file" file-model = "img" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <button ng-disabled="!img" ng-click="uploadImage()" class = "input-group-addon">Upload</button>
+</div>
+<span ng-show="serverResponse" ng-class="{'badge badge-success':serverResponse.isSuccess==true,'badge badge-danger':serverResponse.isSuccess==false}">
+  {{serverResponse.message}}</span><br>
+<button type="button" ng-click="changeMode()"
+        ng-class="{'btn btn-outline-success':isEditMode,'btn btn-outline-primary':!isEditMode}">{{editionMessage()}}</button>
+
+
+
+</div> <br>
+<div class="container">
+    <div class="card-deck">
+      <div class="row col-12">
+        <div class="col-4 col-md-4 col-lg-4 mb-5" ng-repeat = "(id,image) in images">
+          <i class="fa fa-trash-o fa-2x ml-3" style="cursor: pointer;" aria-hidden="true"
+              popconfirm data-confirm-content="de supprimer vouloir supprimer cette photo"  ng-click="deleteImage(image)" ng-show="isEditMode"></i>
+
+          <div class="card h-100">
+             <img ng-show="image" ng-src="data:{{image.mimetype}};base64,{{image.data}}" class="card-img-top" alt="Card image cap"/>
+             <div class="my-card-body">
+               <p style="font-size:15px; color:#36759f;"class="card-text" ng-show="!isEditMode" >{{image.commentaire}}</p>
+               <textarea ng-blur="updateComment(image)"class="form-control" ng-model="image.commentaire" ng-show = "isEditMode">{{image.commentaire}}</textarea>
+             </div>
+             <div class="pl-2">
+               <i class="fa fa-thumbs-o-up" aria-hidden="true"> {{image.like}}</i>
+             </div>
+             <div class="my-card-footer">
+               <small class="text-muted">Updated on : {{image.date}}</small>
+             </div>
+           </div>
+        </div>
+      </div>
+    </div>
+
+
+
+</div>
